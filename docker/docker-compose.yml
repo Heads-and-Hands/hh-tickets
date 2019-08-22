@@ -1,0 +1,49 @@
+version: '3'
+networks:
+  default:
+    driver: bridge
+volumes:
+  app_volume:
+services:
+  data:
+    build:
+      context: ../
+      dockerfile: ./docker/data/Dockerfile
+    volumes:
+      - "app_volume:/app"
+  fpm:
+    build:
+      context: ../
+      dockerfile: ./docker/fpm/Dockerfile
+    networks: 
+      - default
+    volumes:
+      - "app_volume:/var/www/app"
+    depends_on:
+      - data
+  nginx:
+    build:
+      context: ../
+      dockerfile: ./docker/nginx/Dockerfile
+    networks: 
+      - default
+    ports: 
+      - "8080:80"
+    volumes:
+      - "./nginx/conf:/etc/nginx/conf.d"
+      - "app_volume:/var/www/app"
+    depends_on:
+      - fpm
+      - data
+  pgsql:
+    image: postgres:9.5
+    networks:
+      - default
+    ports:
+      - "3336:3306"
+    environment:
+      - POSTGRES_DB=tickets
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+    volumes:
+      - "./../app/database:/var/lib/pgsql"

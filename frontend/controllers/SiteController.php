@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use frontend\components\AuthHandler;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -14,6 +15,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use frontend\components\MyAuthClient;
 
 /**
  * Site controller
@@ -27,23 +29,23 @@ class SiteController extends Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
+                'class' => AccessControl::class,
+                'only' => ['logout', 'signup', 'home'],
                 'rules' => [
                     [
-                        'actions' => ['signup'],
+                        'actions' => ['signup', 'redmine-auth', 'login'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['home','logout'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'logout' => ['post'],
                 ],
@@ -78,9 +80,37 @@ class SiteController extends Controller
     }
 
     /**
-     * Logs in a user.
+     * @param null $token
+     * @return \yii\console\Response|\yii\web\Response
+     */
+    public function actionRedmineAuth($token = null)
+    {
+        if (!Yii::$app->user->isGuest) {
+            return $this->redirect('home');
+        }
+        if (!$token) {
+            $oauthClient = new MyAuthClient();
+            $url = $oauthClient->buildAuthUrl();
+            return Yii::$app->getResponse()->redirect($url);
+        }
+        (new AuthHandler($token))->handle();
+        return $this->redirect('home');
+    }
+
+    /**
+     * Display inner page.
      *
      * @return mixed
+     */
+    public function actionHome()
+    {
+        return $this->render('home');
+    }
+
+    /**
+     * Logs in a user.
+     *
+     * @return string
      */
     public function actionLogin()
     {

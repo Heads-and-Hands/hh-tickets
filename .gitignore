@@ -41,3 +41,9 @@ phpunit.phar
 /backend/web/index.php
 /backend/web/index-test.php
 /backend/web/robots.txt
+
+.env
+/log/frontend-access.log
+/log/frontend-error.log
+/log/backend-access.log
+/log/backend-error.log

@@ -9,6 +9,8 @@ $params = array_merge(
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
+    'language' => 'ru-RU',
+    'timeZone' => 'Europe/Moscow',
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
@@ -43,7 +45,6 @@ return [
             'rules' => [
             ],
         ],
-
     ],
     'params' => $params,
 ];

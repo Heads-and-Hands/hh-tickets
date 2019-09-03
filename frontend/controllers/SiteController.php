@@ -33,7 +33,7 @@ class SiteController extends Controller
                 'only' => ['logout', 'signup', 'home'],
                 'rules' => [
                     [
-                        'actions' => ['signup', 'redmine-auth', 'login'],
+                        'actions' => ['redmine-auth', 'login'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
@@ -94,7 +94,7 @@ class SiteController extends Controller
             return Yii::$app->getResponse()->redirect($url);
         }
         (new AuthHandler($token))->handle();
-        return $this->redirect('home');
+        return $this->redirect('../order/index');
     }
 
     /**

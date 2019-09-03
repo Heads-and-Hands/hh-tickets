@@ -6,7 +6,6 @@ use Yii;
 use frontend\models\Auth;
 use frontend\models\User;
 use yii\helpers\ArrayHelper;
-use frontend\components\AuthHandler;
 
 class AuthHandler
 {
@@ -18,14 +17,15 @@ class AuthHandler
     }
 
     public function handle(){
+
         $oauthClient = new MyAuthClient();
         $attributes = $oauthClient->getProfile($this->token);
-
         $auth = $this->findAuth($attributes);
         if ($auth) {
             $user = $auth->user;
             return Yii::$app->user->login($user);
         }
+
         /** @var array $attributes */
         if ($user = $this->createAccount($attributes)) {
             return Yii::$app->user->login($user);
@@ -84,6 +84,7 @@ class AuthHandler
         return new User([
             'name'    => $userName,
             'login'   => $login,
+            'roles'   => implode(",", $roles),
             'isAdmin' => $isAdmin,
             'auth_key' => Yii::$app->security->generateRandomString(),
         ]);

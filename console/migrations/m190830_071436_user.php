@@ -19,11 +19,12 @@ class m190830_071436_user extends Migration
             'id' => $this->primaryKey()->unsigned(),
             'name' =>$this->string(100)->notNull(),
             'login' => $this->string(100)->notNull(),
+            'roles' => $this->string(100)->notNull(),
             'auth_key' => $this->string(32)->notNull(),
             'isAdmin' => $this->boolean()->defaultValue(false),
             'verification_token' => $this->string()->defaultValue(null),
-            'created_at' => $this->timestamp()->notNull()->defaultValue('1999-01-01 00:00:00'),
-            'updated_at' => $this->timestamp()->notNull()->defaultValue('1999-01-01 00:00:00'),
+            'created_at' => $this->timestamp()->notNull(),
+            'updated_at' => $this->timestamp()->notNull(),
         ], $tableOptions);
 
     }

@@ -2,8 +2,6 @@
 
 /* @var $this yii\web\View */
 
-use yii\helpers\Html;
-
 $this->title = 'Home';
 ?>
 <div class="site-index">

@@ -34,7 +34,6 @@ class MyAuthClient extends OAuth2
         $response = $client->request('GET', $this->authUrl . '/token?token=' . $token, [
             'headers' => ['Content-Type' => 'application/json'],
         ]);
-
         return Json::decode($response->getBody()->getContents(), true);
     }
 

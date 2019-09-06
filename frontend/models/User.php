@@ -5,6 +5,8 @@ namespace frontend\models;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\web\IdentityInterface;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "user".
@@ -28,6 +30,22 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public static function tableName()
     {
         return 'user';
+    }
+
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::class,
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => 'created_at',
+                    ActiveRecord::EVENT_BEFORE_UPDATE => 'updated_at',
+                ],
+                'value' => function() {
+                    return date('j-m-Y H:i');
+                },
+            ],
+        ];
     }
 
     /**

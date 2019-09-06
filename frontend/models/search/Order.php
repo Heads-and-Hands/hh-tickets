@@ -50,8 +50,8 @@ class Order extends OrderModel
 
         $dataProvider->setSort([
             'attributes' => [
-                'id',
-                'name',
+                'order.id',
+                'order.name',
                 'description',
                 'statusName' => [
                     'asc' => ['status.name' => SORT_ASC],
@@ -65,10 +65,6 @@ class Order extends OrderModel
         $this->load($params);
 
         if (!($this->load($params) && $this->validate())) {
-            /**
-             * Жадная загрузка данных модели Страны
-             * для работы сортировки.
-             */
             $query->joinWith(['status']);
             return $dataProvider;
         }
@@ -84,12 +80,12 @@ class Order extends OrderModel
         }
 
         $query->andFilterWhere([
-            'id' => $this->id,
+            'order.id' => $this->id,
             'status_id' => $this->status_id,
             'created_at' => $this->created_at,
         ]);
 
-        $query->andFilterWhere(['ilike', 'name', $this->name])
+        $query->andFilterWhere(['ilike', 'order.name', $this->name])
             ->andFilterWhere(['ilike', 'description', $this->description]);
 
         $query->joinWith(['status' => function ($q) {

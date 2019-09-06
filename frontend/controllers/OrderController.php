@@ -25,26 +25,20 @@ class OrderController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
+                        'actions' => ['login', 'error'],
                         'allow' => true,
-                        'actions' => ['create', 'index'],
-                        'roles' => ['user'],
                     ],
                     [
+                        'actions' => ['logout', 'index', 'create'],
                         'allow' => true,
-                        'actions' => ['index', 'update'],
-                        'roles' => ['manager'],
-                    ],
-                    [
-                        'allow' => true,
-                        'actions' => ['create', 'index', 'update', 'view'],
-                        'roles' => ['admin'],
+                        'roles' => ['@'],
                     ],
                 ],
             ],
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
-                    'delete' => ['POST'],
+                    'logout' => ['post'],
                 ],
             ],
         ];

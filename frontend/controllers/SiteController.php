@@ -38,7 +38,7 @@ class SiteController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['home','logout'],
+                        'actions' => ['home','logout', 'redmine-auth'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],

@@ -53,3 +53,16 @@ services:
           - tickets-postgres-data:/var/lib/postgresql/data
         ports:
           - 9432:5432
+networks:
+  proxy:
+    external: true
+
+app:
+    networks:
+      - proxy
+
+    labels:
+      - "traefik.frontend.rule=Host:tickets.headsandhands.ru"
+      - "traefik.port=28587"
+      - "traefik.docker.network=proxy"
+      - "traefik.frontend.entryPoints=https"

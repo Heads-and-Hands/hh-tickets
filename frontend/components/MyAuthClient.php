@@ -22,8 +22,8 @@ class MyAuthClient extends OAuth2
         $authState = $this->generateAuthState();
         $this->setState('authState', $authState);
         $defaultParams = [
-            'redirect_uri' => '/site/redmine-auth',
-            'client_id' => 6,
+            'redirect_uri' => '/admin/site/redmine-auth',
+            'client_id' => 9,
         ];
         return $this->composeUrl($this->authUrl, array_merge($defaultParams, $params));
     }

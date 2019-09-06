@@ -1,8 +1,8 @@
 <?php
 
 namespace frontend\models;
-use yii\behaviors\TimestampBehavior;
 
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
 /**

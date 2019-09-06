@@ -39,36 +39,12 @@ AppAsset::register($this);
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
-        $roles = User::find()
-            ->select('roles')
-            ->where(['id' => Yii::$app->user->identity->getId()])
-            ->one();
-        $role = null;
-
-//        foreach($roles as $role){
-//            if($role == 362){
-//                $role = 'manager';
-//            }else if($role == 232){
-//                $role = 'admin';
-//            } else $role = 'user';;
-//        }
-//        if($role == 'user'){
-//            $menuItems[] = ['label' => 'Создать заявку', 'url' => ['/order/create']];
-//            $menuItems[] = ['label' => 'Мои заявки', 'url' => ['/order/index']];
-//        }
         if (\Yii::$app->user->can('createOrder')) {
             $menuItems[] = ['label' => 'Создать заявку', 'url' => ['/order/create']];
         }
         if (\Yii::$app->user->can('viewYourOrders')) {
             $menuItems[] = ['label' => 'Мои заявки', 'url' => ['/order/index']];
         }
-//        if (\Yii::$app->user->can('viewYourOrders')) {
-//            $menuItems[] = ['label' => 'Мои заявки', 'url' => ['/order/index']];
-//        }
-//        if($role == 'manager'  || $role == 'admin'){
-//            $menuItems[] = ['label' => 'Заявки', 'url' => ['/site/signup']];
-//            $menuItems[] = ['label' => 'Изменить статус заявки', 'url' => ['/site/signup']];
-//        }
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(

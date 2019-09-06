@@ -52,7 +52,7 @@ class RbacController extends Controller
         $auth->addChild($admin, $user);
         $auth->addChild($admin, $manager);
 
-        $auth->assign($user, 6);
+        $auth->assign($user, 13);
         $auth->assign($manager, 362);
         $auth->assign($admin, 232);
     }

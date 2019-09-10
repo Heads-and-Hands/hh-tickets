@@ -24,7 +24,7 @@ class m190830_071436_user extends Migration
             'isAdmin' => $this->boolean()->defaultValue(false),
             'verification_token' => $this->string()->defaultValue(null),
             'created_at' => $this->timestamp()->notNull(),
-            'updated_at' => $this->timestamp()->notNull(),
+            'updated_at' => $this->timestamp(),
         ], $tableOptions);
 
     }

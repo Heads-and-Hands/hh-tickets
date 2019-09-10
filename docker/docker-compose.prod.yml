@@ -1,0 +1,53 @@
+version: '3.4'
+
+networks:
+  default:
+
+volumes:
+  tickets-postgres-data:
+    external: true
+
+services:
+    fpm: &fpm-container
+        build:
+          context: ./local
+          target: app
+          dockerfile: Dockerfile_fpm
+        container_name: tickets_fpm
+        networks:
+          - default
+        volumes:
+          - &data-app ../:/app
+          - ./local/config/fpm/www.conf:/usr/local/etc/php-fpm.d/www.conf
+          - ./local/config/fpm/php.ini:/usr/local/etc/php/php.ini
+        environment:
+          PHP_IDE_CONFIG: serverName=docker-tickets
+          REMOTE_HOST: 192.168.93.193
+        depends_on:
+          - database
+    nginx:
+        build:
+          context: ./local
+          dockerfile: Dockerfile_nginx
+        container_name: tickets_nginx
+        ports:
+          - 28587:80
+        restart: always
+        volumes:
+          - *data-app
+          - ./local/config/nginx/nginx.conf:/etc/nginx/nginx.conf
+          - ./local/config/nginx/site.conf:/etc/nginx/site.conf
+        networks:
+          - default
+        depends_on:
+          - fpm
+    database:
+        image: postgres:11.1
+        networks:
+          - default
+        restart: always
+        container_name: tickets_db
+        environment:
+          POSTGRES_PASSWORD: root
+        ports:
+          - 9432:5432

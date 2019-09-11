@@ -48,9 +48,9 @@ services:
         restart: always
         container_name: tickets_db
         environment:
-          POSTGRES_USER: root
+          POSTGRES_USER: tickets
           POSTGRES_PASSWORD: root
         volumes:
-          - /Users/den/www/tickets.loc/tickets-postgres-data:/var/lib/postgresql/data
+          - tickets-postgres-data:/var/lib/postgresql/data
         ports:
           - 9432:5432

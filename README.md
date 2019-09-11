@@ -13,14 +13,14 @@
        git clone https://github.com/Heads-and-Hands/hh-tickets.git .
 3. Инициализируем проект
 
-       init --env=Development --overwrite=All
+       php init --env=Development --overwrite=All
 4. Подтягиваем зависимости
 
        composer install
 5. Запускаем окружение
 
        docker-compose -f docker/docker-compose.yml up -d
-6. Открываем в редакторе файл app/common/config/main-local.php и заполняем его даными для подключения к БД
+6. Открываем в редакторе файл common/config/main-local.php и заполняем его даными для подключения к БД
 7. Подключаемся к контейнеру
        
        docker exec -it tickets_fpm bash
@@ -32,10 +32,10 @@
        php yii migrate --migrationPath=@yii/rbac/migrations
 10. Добавляем роли и разрешения
 
-       yii rbac/init       
+        php yii rbac/init       
 11. Выходим из контейнера
 
-       CTRL+D 
+        CTRL+D 
 12. Останавливаем работу сервиса
 
         docker-compose -f docker/docker-compose.yml down

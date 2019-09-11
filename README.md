@@ -27,15 +27,21 @@
 8. Выполняем команду миграции БД
 
        php yii migrate
-9. Выходим из контейнера
+9. Создаем таблицы для RBAC
+
+       php yii migrate --migrationPath=@yii/rbac/migrations
+10. Добавляем роли и разрешения
+
+       yii rbac/init       
+11. Выходим из контейнера
 
        CTRL+D 
-10. Останавливаем работу сервиса
+12. Останавливаем работу сервиса
 
         docker-compose -f docker/docker-compose.yml down
-11. Запускаем его заново
+13. Запускаем его заново
 
         docker-compose docker/docker-compose up -d
-12. Проверяем, набрав адрес в браузере
+14. Проверяем, набрав адрес в браузере
 
         http://localhost:28587/admin 

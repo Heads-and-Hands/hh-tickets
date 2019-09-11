@@ -11,25 +11,31 @@
 2. Скачиваем проект в текущую директорию
 
        git clone https://github.com/Heads-and-Hands/hh-tickets.git .
-3. Запускаем окружение
+3. Инициализируем проект
 
-       docker-compose docker/docker-compose up -d
-4. Открываем в редакторе файл app/common/config/main-local.php и заполняем его даными для подключения к БД
-5. Подключаемся к контейнеру
+       init --env=Development --overwrite=All
+4. Подтягиваем зависимости
+
+       composer install
+5. Запускаем окружение
+
+       docker-compose -f docker/docker-compose.yml up -d
+6. Открываем в редакторе файл app/common/config/main-local.php и заполняем его даными для подключения к БД
+7. Подключаемся к контейнеру
        
-       docker exec -it docker_fpm bash
-6. Выполняем команду миграции БД
+       docker exec -it tickets_fpm bash
+8. Выполняем команду миграции БД
 
        php yii migrate
-7. Выходим из контейнера - для выхода используем комбинацию клавиш:
+9. Выходим из контейнера
 
        CTRL+D 
-8. Останавливаем работу сервиса
+10. Останавливаем работу сервиса
 
-       docker-compose -f docker/docker-compose.yml down
-9. Запускаем его заново
+        docker-compose -f docker/docker-compose.yml down
+11. Запускаем его заново
 
-       docker-compose docker/docker-compose up -d
-10. Проверяем, набрав адрес в браузере
+        docker-compose docker/docker-compose up -d
+12. Проверяем, набрав адрес в браузере
 
         http://localhost:28587/admin 

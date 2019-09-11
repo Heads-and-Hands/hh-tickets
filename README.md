@@ -32,10 +32,10 @@
        php yii migrate --migrationPath=@yii/rbac/migrations
 10. Добавляем роли и разрешения
 
-       yii rbac/init       
+        yii rbac/init       
 11. Выходим из контейнера
 
-       CTRL+D 
+        CTRL+D 
 12. Останавливаем работу сервиса
 
         docker-compose -f docker/docker-compose.yml down

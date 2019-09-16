@@ -18,7 +18,11 @@ class ContactForm extends Model
 
 
     /**
+<<<<<<< HEAD
+     * @inheritdoc
+=======
      * {@inheritdoc}
+>>>>>>> 4a2cdc722d881805c25cac6c1c33b11bab592d89
      */
     public function rules()
     {
@@ -33,7 +37,11 @@ class ContactForm extends Model
     }
 
     /**
+<<<<<<< HEAD
+     * @inheritdoc
+=======
      * {@inheritdoc}
+>>>>>>> 4a2cdc722d881805c25cac6c1c33b11bab592d89
      */
     public function attributeLabels()
     {
@@ -52,8 +60,12 @@ class ContactForm extends Model
     {
         return Yii::$app->mailer->compose()
             ->setTo($email)
+<<<<<<< HEAD
+            ->setFrom([$this->email => $this->name])
+=======
             ->setFrom([Yii::$app->params['senderEmail'] => Yii::$app->params['senderName']])
             ->setReplyTo([$this->email => $this->name])
+>>>>>>> 4a2cdc722d881805c25cac6c1c33b11bab592d89
             ->setSubject($this->subject)
             ->setTextBody($this->body)
             ->send();

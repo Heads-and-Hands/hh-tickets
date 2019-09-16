@@ -7,6 +7,19 @@
  *
  * In order to run this script from the web, you should copy it to the web root.
  * If you are using Linux you can create a hard link instead, using the following command:
+<<<<<<< HEAD
+ * ln ../requirements.php requirements.php
+ */
+
+// you may need to adjust this path to the correct Yii framework path
+$frameworkPath = dirname(__FILE__) . '/vendor/yiisoft/yii2';
+
+if (!is_dir($frameworkPath)) {
+    echo '<h1>Error</h1>';
+    echo '<p><strong>The path to yii framework seems to be incorrect.</strong></p>';
+    echo '<p>You need to install Yii framework via composer or adjust the framework path in file <abbr title="' . __FILE__ . '">' . basename(__FILE__) . '</abbr>.</p>';
+    echo '<p>Please refer to the <abbr title="' . dirname(__FILE__) . '/README.md">README</abbr> on how to install Yii.</p>';
+=======
  * ln ../../requirements.php requirements.php
  */
 
@@ -37,6 +50,7 @@ if (!isset($frameworkPath) || !is_dir($frameworkPath)) {
         echo $message;
     }
     exit(1);
+>>>>>>> 4a2cdc722d881805c25cac6c1c33b11bab592d89
 }
 
 require_once $frameworkPath . '/requirements/YiiRequirementChecker.php';
@@ -148,8 +162,12 @@ $requirements = array(
         'memo' => 'PHP mail SMTP server required',
     ),
 );
+<<<<<<< HEAD
+$requirementsChecker->checkYii()->check($requirements)->render();
+=======
 
 $result = $requirementsChecker->checkYii()->check($requirements)->getResult();
 $requirementsChecker->render();
 
 exit($result['summary']['errors'] === 0 ? 0 : 1);
+>>>>>>> 4a2cdc722d881805c25cac6c1c33b11bab592d89

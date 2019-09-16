@@ -1,4 +1,7 @@
+<<<<<<< HEAD
+=======
 codeception-local.php
+>>>>>>> 4a2cdc722d881805c25cac6c1c33b11bab592d89
 main-local.php
 params-local.php
 test-local.php

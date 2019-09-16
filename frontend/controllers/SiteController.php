@@ -1,11 +1,16 @@
 <?php
 namespace frontend\controllers;
 
+<<<<<<< HEAD
+use Yii;
+use yii\base\InvalidParamException;
+=======
 use frontend\components\AuthHandler;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
 use yii\base\InvalidArgumentException;
+>>>>>>> 4a2cdc722d881805c25cac6c1c33b11bab592d89
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -15,7 +20,10 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+<<<<<<< HEAD
+=======
 use frontend\components\MyAuthClient;
+>>>>>>> 4a2cdc722d881805c25cac6c1c33b11bab592d89
 
 /**
  * Site controller
@@ -23,29 +31,49 @@ use frontend\components\MyAuthClient;
 class SiteController extends Controller
 {
     /**
+<<<<<<< HEAD
+     * @inheritdoc
+=======
      * {@inheritdoc}
+>>>>>>> 4a2cdc722d881805c25cac6c1c33b11bab592d89
      */
     public function behaviors()
     {
         return [
             'access' => [
+<<<<<<< HEAD
+                'class' => AccessControl::className(),
+                'only' => ['logout', 'signup'],
+                'rules' => [
+                    [
+                        'actions' => ['signup'],
+=======
                 'class' => AccessControl::class,
                 'only' => ['logout', 'signup', 'home'],
                 'rules' => [
                     [
                         'actions' => ['redmine-auth', 'login'],
+>>>>>>> 4a2cdc722d881805c25cac6c1c33b11bab592d89
                         'allow' => true,
                         'roles' => ['?'],
                     ],
                     [
+<<<<<<< HEAD
+                        'actions' => ['logout'],
+=======
                         'actions' => ['home','logout', 'redmine-auth'],
+>>>>>>> 4a2cdc722d881805c25cac6c1c33b11bab592d89
                         'allow' => true,
                         'roles' => ['@'],
                     ],
                 ],
             ],
             'verbs' => [
+<<<<<<< HEAD
+                'class' => VerbFilter::className(),
+=======
                 'class' => VerbFilter::class,
+>>>>>>> 4a2cdc722d881805c25cac6c1c33b11bab592d89
                 'actions' => [
                     'logout' => ['post'],
                 ],
@@ -54,7 +82,11 @@ class SiteController extends Controller
     }
 
     /**
+<<<<<<< HEAD
+     * @inheritdoc
+=======
      * {@inheritdoc}
+>>>>>>> 4a2cdc722d881805c25cac6c1c33b11bab592d89
      */
     public function actions()
     {
@@ -78,6 +110,8 @@ class SiteController extends Controller
     {
         return $this->render('index');
     }
+<<<<<<< HEAD
+=======
 
     /**
      * @param null $token
@@ -287,4 +321,5 @@ class SiteController extends Controller
             'model' => $model
         ]);
     }
+>>>>>>> 4a2cdc722d881805c25cac6c1c33b11bab592d89
 }

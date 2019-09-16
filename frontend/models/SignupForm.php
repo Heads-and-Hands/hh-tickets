@@ -1,9 +1,14 @@
 <?php
 namespace frontend\models;
 
+<<<<<<< HEAD
+use yii\base\Model;
+use common\models\User;
+=======
 use Yii;
 use yii\base\Model;
 use frontend\models\User;
+>>>>>>> 4a2cdc722d881805c25cac6c1c33b11bab592d89
 
 /**
  * Signup form
@@ -16,7 +21,11 @@ class SignupForm extends Model
 
 
     /**
+<<<<<<< HEAD
+     * @inheritdoc
+=======
      * {@inheritdoc}
+>>>>>>> 4a2cdc722d881805c25cac6c1c33b11bab592d89
      */
     public function rules()
     {
@@ -40,7 +49,11 @@ class SignupForm extends Model
     /**
      * Signs user up.
      *
+<<<<<<< HEAD
+     * @return User|null the saved model or null if saving fails
+=======
      * @return bool whether the creating new account was successful and email was sent
+>>>>>>> 4a2cdc722d881805c25cac6c1c33b11bab592d89
      */
     public function signup()
     {
@@ -53,6 +66,10 @@ class SignupForm extends Model
         $user->email = $this->email;
         $user->setPassword($this->password);
         $user->generateAuthKey();
+<<<<<<< HEAD
+        
+        return $user->save() ? $user : null;
+=======
         $user->generateEmailVerificationToken();
 
         $auth = Yii::$app->authManager;
@@ -80,5 +97,6 @@ class SignupForm extends Model
             ->setTo($this->email)
             ->setSubject('Account registration at ' . Yii::$app->name)
             ->send();
+>>>>>>> 4a2cdc722d881805c25cac6c1c33b11bab592d89
     }
 }

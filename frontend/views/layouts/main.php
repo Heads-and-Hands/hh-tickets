@@ -9,7 +9,10 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
+<<<<<<< HEAD
+=======
 use frontend\models\User;
+>>>>>>> 4a2cdc722d881805c25cac6c1c33b11bab592d89
 
 AppAsset::register($this);
 ?>
@@ -20,7 +23,11 @@ AppAsset::register($this);
     <meta charset="<?= Yii::$app->charset ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+<<<<<<< HEAD
+    <?= Html::csrfMetaTags() ?>
+=======
     <?php $this->registerCsrfMetaTags() ?>
+>>>>>>> 4a2cdc722d881805c25cac6c1c33b11bab592d89
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
@@ -30,12 +37,18 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
+<<<<<<< HEAD
+        'brandLabel' => Yii::$app->name,
+=======
         'brandLabel' => 'Tickets',
+>>>>>>> 4a2cdc722d881805c25cac6c1c33b11bab592d89
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
+<<<<<<< HEAD
+=======
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
@@ -58,6 +71,7 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => $menuItems,
     ]);
+>>>>>>> 4a2cdc722d881805c25cac6c1c33b11bab592d89
     NavBar::end();
     ?>
 

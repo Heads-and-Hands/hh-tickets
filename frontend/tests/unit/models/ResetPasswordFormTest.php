@@ -25,11 +25,19 @@ class ResetPasswordFormTest extends \Codeception\Test\Unit
 
     public function testResetWrongToken()
     {
+<<<<<<< HEAD
+        $this->tester->expectException('yii\base\InvalidParamException', function() {
+            new ResetPasswordForm('');
+        });
+
+        $this->tester->expectException('yii\base\InvalidParamException', function() {
+=======
         $this->tester->expectException('\yii\base\InvalidArgumentException', function() {
             new ResetPasswordForm('');
         });
 
         $this->tester->expectException('\yii\base\InvalidArgumentException', function() {
+>>>>>>> 4a2cdc722d881805c25cac6c1c33b11bab592d89
             new ResetPasswordForm('notexistingtoken_1391882543');
         });
     }

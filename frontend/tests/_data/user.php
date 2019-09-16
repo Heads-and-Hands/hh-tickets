@@ -20,6 +20,8 @@ return [
         'email' => 'nicolas.dianna@hotmail.com',
         'status' => '0',
     ],
+<<<<<<< HEAD
+=======
     [
         'username' => 'test.test',
         'auth_key' => 'O87GkY3_UfmMHYkyezZ7QLfmkKNsllzT',
@@ -42,4 +44,5 @@ return [
         'updated_at' => '1548675330',
         'verification_token' => 'already_used_token_1548675330',
     ],
+>>>>>>> 4a2cdc722d881805c25cac6c1c33b11bab592d89
 ];

@@ -13,6 +13,9 @@ require __DIR__ . '/../../vendor/yiisoft/yii2/Yii.php';
 require __DIR__ . '/../../common/config/bootstrap.php';
 require __DIR__ . '/../config/bootstrap.php';
 
+<<<<<<< HEAD
+$config = require __DIR__ . '/../config/test-local.php';
+=======
 $config = yii\helpers\ArrayHelper::merge(
     require __DIR__ . '/../../common/config/main.php',
     require __DIR__ . '/../../common/config/main-local.php',
@@ -23,5 +26,6 @@ $config = yii\helpers\ArrayHelper::merge(
     require __DIR__ . '/../config/test.php',
     require __DIR__ . '/../config/test-local.php'
 );
+>>>>>>> 4a2cdc722d881805c25cac6c1c33b11bab592d89
 
 (new yii\web\Application($config))->run();

@@ -1,10 +1,19 @@
 namespace: frontend\tests
+<<<<<<< HEAD
+actor: Tester
+paths:
+    tests: tests
+    log: tests/_output
+    data: tests/_data
+    helpers: tests/_support
+=======
 actor_suffix: Tester
 paths:
     tests: tests
     output: tests/_output
     data: tests/_data
     support: tests/_support
+>>>>>>> 4a2cdc722d881805c25cac6c1c33b11bab592d89
 settings:
     bootstrap: _bootstrap.php
     colors: true
@@ -12,4 +21,8 @@ settings:
 modules:
     config:
         Yii2:
+<<<<<<< HEAD
+            configFile: 'config/test-local.php'
+=======
             configFile: 'config/codeception-local.php'
+>>>>>>> 4a2cdc722d881805c25cac6c1c33b11bab592d89

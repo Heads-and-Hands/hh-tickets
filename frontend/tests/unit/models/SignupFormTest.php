@@ -31,6 +31,14 @@ class SignupFormTest extends \Codeception\Test\Unit
         ]);
 
         $user = $model->signup();
+<<<<<<< HEAD
+
+        expect($user)->isInstanceOf('common\models\User');
+
+        expect($user->username)->equals('some_username');
+        expect($user->email)->equals('some_email@example.com');
+        expect($user->validatePassword('some_password'))->true();
+=======
         expect($user)->true();
 
         /** @var \common\models\User $user */
@@ -49,6 +57,7 @@ class SignupFormTest extends \Codeception\Test\Unit
         expect($mail->getFrom())->hasKey(\Yii::$app->params['supportEmail']);
         expect($mail->getSubject())->equals('Account registration at ' . \Yii::$app->name);
         expect($mail->toString())->contains($user->verification_token);
+>>>>>>> 4a2cdc722d881805c25cac6c1c33b11bab592d89
     }
 
     public function testNotCorrectSignup()

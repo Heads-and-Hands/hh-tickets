@@ -34,9 +34,16 @@ return [
         'setWritable' => [
             'backend/runtime',
             'backend/web/assets',
+<<<<<<< HEAD
+            'frontend/runtime',
+            'frontend/web/assets',
+            'api/runtime',
+            'api/web/assets',
+=======
             'console/runtime',
             'frontend/runtime',
             'frontend/web/assets',
+>>>>>>> 4a2cdc722d881805c25cac6c1c33b11bab592d89
         ],
         'setExecutable' => [
             'yii',
@@ -44,8 +51,13 @@ return [
         ],
         'setCookieValidationKey' => [
             'backend/config/main-local.php',
+<<<<<<< HEAD
+            'frontend/config/main-local.php',
+            'api/config/main-local.php',
+=======
             'common/config/codeception-local.php',
             'frontend/config/main-local.php',
+>>>>>>> 4a2cdc722d881805c25cac6c1c33b11bab592d89
         ],
     ],
     'Production' => [
@@ -53,9 +65,16 @@ return [
         'setWritable' => [
             'backend/runtime',
             'backend/web/assets',
+<<<<<<< HEAD
+            'frontend/runtime',
+            'frontend/web/assets',
+            'api/runtime',
+            'api/web/assets',
+=======
             'console/runtime',
             'frontend/runtime',
             'frontend/web/assets',
+>>>>>>> 4a2cdc722d881805c25cac6c1c33b11bab592d89
         ],
         'setExecutable' => [
             'yii',
@@ -63,6 +82,10 @@ return [
         'setCookieValidationKey' => [
             'backend/config/main-local.php',
             'frontend/config/main-local.php',
+<<<<<<< HEAD
+            'api/config/main-local.php',
+=======
+>>>>>>> 4a2cdc722d881805c25cac6c1c33b11bab592d89
         ],
     ],
 ];

@@ -1,5 +1,4 @@
 <?php
-<<<<<<< HEAD
 return yii\helpers\ArrayHelper::merge(
     require __DIR__ . '/../../common/config/test-local.php',
     require __DIR__ . '/main.php',
@@ -8,7 +7,3 @@ return yii\helpers\ArrayHelper::merge(
     [
     ]
 );
-=======
-return [
-];
->>>>>>> 4a2cdc722d881805c25cac6c1c33b11bab592d89

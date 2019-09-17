@@ -30,9 +30,54 @@ class OrderController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'create', 'update', 'edit-status', 'delete'],
+                        'actions' => ['logout', 'index'],
                         'allow' => true,
                         'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['create'],
+                        'allow' => true,
+                        'matchCallback' => function () {
+                            if ($this->getRole() === Order::ROLE_USER){
+                                return true;
+                            } else {
+                                return $this->redirect('index');
+                            }
+                        }
+                    ],
+                    [
+                        'actions' => ['edit-status'],
+                        'allow' => true,
+                        'matchCallback' => function () {
+                            if ($this->getRole() === Order::ROLE_ADMIN
+                                || $this->getRole() === Order::ROLE_MANAGER){
+                                return true;
+                            } else {
+                                return $this->redirect('index');
+                            }
+                        }
+                    ],
+                    [
+                        'actions' => ['update'],
+                        'allow' => true,
+                        'matchCallback' => function () {
+                            if ($this->getRole() === Order::ROLE_USER){
+                                return true;
+                            } else {
+                                return $this->redirect('index');
+                            }
+                        }
+                    ],
+                    [
+                        'actions' => ['delete'],
+                        'allow' => true,
+                        'matchCallback' => function () {
+                            if ($this->getRole() === Order::ROLE_ADMIN){
+                                return true;
+                            } else {
+                                return $this->redirect('index');
+                            }
+                        }
                     ],
                 ],
             ],
@@ -75,59 +120,51 @@ class OrderController extends Controller
      */
     public function actionCreate()
     {
-        if ($this->getRole() === Order::ROLE_USER){
-            $model = new Order();
+        $model = new Order();
 
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['index']);
-            }
-
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        } else {
-            return $this->redirect('index');
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['index']);
         }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
     public function actionEditStatus($id)
     {
-        if ($this->getRole() === Order::ROLE_ADMIN || $this->getRole() === Order::ROLE_MANAGER){
-            $model = $this->findModel($id);
+        $model = $this->findModel($id);
 
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['index']);
-            }
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['index']);
+        }
 
-            $statusesManager = null;
+        $statusesManager = null;
 
-            if ($model->status_id == 1) {
-                $statusesManager = [
-                    '2' => 'В работе',
-                    '3' => 'Отклонена',
-                ];
-            } elseif ($model->status_id == 2) {
-                $statusesManager = [
-                    '4' => 'Сделана',
-                ];
-            }
-
-            $statusesAdmin = [
-                '1' => 'Новая',
+        if ($model->status_id == 1) {
+            $statusesManager = [
                 '2' => 'В работе',
                 '3' => 'Отклонена',
+            ];
+        } elseif ($model->status_id == 2) {
+            $statusesManager = [
                 '4' => 'Сделана',
             ];
-
-            return $this->render('edit-status', [
-                'model' => $model,
-                'statusesAdmin' => $statusesAdmin,
-                'statusesManager' => $statusesManager,
-                'id' => $model->id
-            ]);
-        } else {
-            return $this->redirect('index');
         }
+
+        $statusesAdmin = [
+            '1' => 'Новая',
+            '2' => 'В работе',
+            '3' => 'Отклонена',
+            '4' => 'Сделана',
+        ];
+
+        return $this->render('edit-status', [
+            'model' => $model,
+            'statusesAdmin' => $statusesAdmin,
+            'statusesManager' => $statusesManager,
+            'id' => $model->id
+        ]);
     }
 
     /**
@@ -139,20 +176,16 @@ class OrderController extends Controller
      */
     public function actionUpdate($id)
     {
-        if ($this->getRole() === Order::ROLE_USER){
-            $model = $this->findModel($id);
+        $model = $this->findModel($id);
 
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['index']);
-            }
-
-            return $this->render('update', [
-                'model' => $model,
-                'id' => $id,
-            ]);
-        } else {
-            return $this->redirect('index');
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['index']);
         }
+
+        return $this->render('update', [
+            'model' => $model,
+            'id' => $id,
+        ]);
     }
 
     /**
@@ -164,12 +197,8 @@ class OrderController extends Controller
      */
     public function actionDelete($id)
     {
-        if ($this->getRole() === 1){
-            $this->findModel($id)->delete();
-            return $this->redirect(['index']);
-        } else {
-            return $this->redirect('index');
-        }
+        $this->findModel($id)->delete();
+        return $this->redirect(['index']);
     }
 
     /**

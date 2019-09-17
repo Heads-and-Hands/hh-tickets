@@ -2,15 +2,14 @@
 
 namespace api\modules\v1\controllers\base;
 
-use api\modules\v1\components\filters\auth\HttpTokenAuth;
-use yii\filters\auth\CompositeAuth;
 use yii\filters\Cors;
 use yii\helpers\ArrayHelper;
+use \yii\rest\ActiveController;
 
 /**
  * Контроллер родитель для контроллеров апи требующих авторизацию
 */
-class Controller extends \yii\rest\Controller
+class Controller extends ActiveController
 {
     public function behaviors()
     {

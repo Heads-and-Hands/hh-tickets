@@ -1,4 +1,5 @@
 <?php
+
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
@@ -23,19 +24,12 @@ return [
             'loginUrl' => null,
         ],
         'response' => [
-            'format' => yii\web\Response::FORMAT_JSON,
-            'on beforeSend' => function ($event) {
-                /* @var $response \yii\web\Response */
-                $response = $event->sender;
-                $error = $response->statusCode != 200;
-                $response->data =  [
-                    'data' => !$error ? $response->data : null,
-                    'code' => empty($code) ? ($error ? 0 : 1) : $code,
-                    'message' => $error
-                        ? (isset($response->data['message']) ? $response->data['message'] : 'Unknown Error')
-                        : '',
-                ];
-            },
+//            'format' => yii\web\Response::FORMAT_JSON,
+            'format' => [
+                \yii\web\Response::FORMAT_JSON => [
+                    'class' => 'yii\web\JsonResponseFormatter',
+                ],
+            ],
         ],
         'request' => [
             'class' => '\yii\web\Request',
@@ -43,7 +37,6 @@ return [
             'enableCookieValidation' => false,
             'enableCsrfValidation' => false,
             'parsers' => [
-                'multipart/form-data' => 'yii\web\MultipartFormDataParser',
                 'application/json' => 'yii\web\JsonParser',
             ],
         ],
@@ -61,9 +54,13 @@ return [
         ],
         'urlManager' => [
             'enablePrettyUrl' => true,
+            'enableStrictParsing' => true,
             'showScriptName' => false,
             'rules' => [
-                'GET v1/default' => '/v1/default',
+                [
+                    'GET order' => 'v1/order',
+                    'POST order' => 'v1/order',
+                ],
             ],
         ],
     ],

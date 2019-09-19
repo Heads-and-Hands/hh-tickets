@@ -12,9 +12,22 @@ class Order extends BaseOrder
             'id',
             'name',
             'user_id',
+            'name',
             'description',
             'status_id',
             'created_at',
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
+        return [
+            [['user_id'], 'integer'],
+            [['status_id'], 'default', 'value' => self::STATUS_NEW],
+            [['name', 'description'], 'string', 'max' => 100],
         ];
     }
 }

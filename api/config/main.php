@@ -24,12 +24,7 @@ return [
             'loginUrl' => null,
         ],
         'response' => [
-//            'format' => yii\web\Response::FORMAT_JSON,
-            'format' => [
-                \yii\web\Response::FORMAT_JSON => [
-                    'class' => 'yii\web\JsonResponseFormatter',
-                ],
-            ],
+            'format' => yii\web\Response::FORMAT_JSON,
         ],
         'request' => [
             'class' => '\yii\web\Request',
@@ -58,8 +53,9 @@ return [
             'showScriptName' => false,
             'rules' => [
                 [
-                    'GET order' => 'v1/order',
-                    'POST order' => 'v1/order',
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => ['v1/order'],
+                    'pluralize' => false,
                 ],
             ],
         ],

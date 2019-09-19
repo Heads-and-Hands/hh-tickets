@@ -45,10 +45,10 @@ class m130524_201442_init extends Migration
 
         $this->createTable('{{%order}}', [
             'id' => $this->primaryKey()->unsigned(),
-            'user_id' => $this->integer()->unsigned()->notNull(),
-            'name' =>$this->string(100)->notNull(),
-            'description' => $this->string(100)->notNull(),
-            'status_id' => $this->integer()->unsigned()->notNull(),
+            'user_id' => $this->integer()->unsigned(),
+            'name' =>$this->string(100),
+            'description' => $this->string(100),
+            'status_id' => $this->integer()->unsigned(),
             'created_at' => $this->timestamp()->notNull(),
         ]);
 

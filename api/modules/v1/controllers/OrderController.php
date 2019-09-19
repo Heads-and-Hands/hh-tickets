@@ -2,10 +2,9 @@
 
 namespace api\modules\v1\controllers;
 
+use api\modules\v1\forms\OrderCreateForm;
 use api\modules\v1\models\Order;
-use PHPUnit\Framework\Error\Error;
 use yii\data\ActiveDataProvider;
-use yii\rest\ActiveController;
 use yii\rest\Controller;
 
 class OrderController extends Controller
@@ -22,14 +21,16 @@ class OrderController extends Controller
 
     public function actionCreate()
     {
-        $model = new Order();
-        $request = \Yii::$app->request->post();
-        $model->attributes = $request;
-        if (!$model->save()) {
-            \Yii::$app->getResponse()->setStatusCode(400);
-            return '';
-        }
+        $form = new OrderCreateForm();
+        $form->load(\Yii::$app->request->post(), '');
+        $order = Order::createNewOrder($form);
+        $order->save();
 
-        return $model;
+//        if (!$order->save()) {
+//            \Yii::$app->getResponse()->setStatusCode(400);
+//            return '';
+//        }
+
+        return $order;
     }
 }

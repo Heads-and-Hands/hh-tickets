@@ -12,22 +12,24 @@ class Order extends BaseOrder
             'id',
             'name',
             'user_id',
-            'name',
             'description',
             'status_id',
             'created_at',
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
+    public static function createNewOrder($form)
     {
-        return [
-            [['user_id'], 'integer'],
-            [['status_id'], 'default', 'value' => self::STATUS_NEW],
-            [['name', 'description'], 'string', 'max' => 100],
-        ];
+        $order = new self([
+            'user_id' => $form->user_id,
+            'name' => $form->name,
+            'description' => $form->description,
+            'status_id' => $form->status_id,
+            'created_at' => $form->created_at,
+        ]);
+        if ($order->save()) {
+            return $order;
+        }
+        return null;
     }
 }

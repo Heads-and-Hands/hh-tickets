@@ -90,13 +90,6 @@ class OrderController extends Controller
         ];
     }
 
-    public function getRole() {
-        return $role = User::find()
-            ->select('role')
-            ->where(['id' => Yii::$app->user->id])
-            ->scalar();
-    }
-
     /**
      * Lists all Order models.
      * @return mixed
@@ -109,7 +102,7 @@ class OrderController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'role' => $this->getRole(),
+            'role' => (new Order())->getRole(),
         ]);
     }
 

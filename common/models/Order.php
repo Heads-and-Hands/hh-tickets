@@ -2,7 +2,6 @@
 
 namespace common\models;
 
-use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
 
@@ -55,7 +54,7 @@ class Order extends \yii\db\ActiveRecord
     {
         return [
             [['status_id'], 'default', 'value' => self::STATUS_NEW],
-            [['user_id'], 'default', 'value' => Yii::$app->user->identity->getId()],
+//            [['user_id'], 'default', 'value' => Yii::$app->user->identity->getId()],
             [['user_id', 'status_id'], 'integer'],
             [['user_id', 'name', 'description', 'status_id'], 'required'],
             [['created_at'], 'safe'],
@@ -95,5 +94,12 @@ class Order extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
+    }
+
+    public function getRole() {
+        return $role = User::find()
+            ->select('role')
+            ->where(['id' => \Yii::$app->user->id])
+            ->scalar();
     }
 }

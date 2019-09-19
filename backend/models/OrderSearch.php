@@ -14,7 +14,6 @@ class OrderSearch extends Order
 
     public function attributes()
     {
-        // add related fields to searchable attributes
         return array_merge(parent::attributes(), ['status.name', 'user.name']);
     }
 
@@ -34,7 +33,6 @@ class OrderSearch extends Order
      */
     public function scenarios()
     {
-        // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
@@ -49,10 +47,14 @@ class OrderSearch extends Order
     {
         $query = Order::find();
 
-        // add conditions that should always apply here
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        if ((new Order())->getRole() === Order::ROLE_USER)
+        {
+            $query->andWhere(['user_id' => \Yii::$app->user->identity->getId()]);
+        }
 
         $query->joinWith(['status' => function($query) { $query->from(['status' => 'status']); }]);
         $query->joinWith(['user' => function($query) { $query->from(['user' => 'user']); }]);
@@ -70,8 +72,6 @@ class OrderSearch extends Order
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
 
@@ -79,7 +79,6 @@ class OrderSearch extends Order
 
         $query->andFilterWhere(['LIKE', 'user.name', $this->getAttribute('user.name')]);
 
-        // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
             'user_id' => $this->user_id,

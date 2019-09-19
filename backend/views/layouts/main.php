@@ -41,7 +41,7 @@ AppAsset::register($this);
     } else {
         if (Yii::$app->user->identity->role === 3){
             $menuItems = [
-                ['label' => 'Мои Заявки', 'url' => ['/order/index/id']],
+                ['label' => 'Мои Заявки', 'url' => ['/order/index']],
             ];
         }
         if (Yii::$app->user->identity->role === 2){

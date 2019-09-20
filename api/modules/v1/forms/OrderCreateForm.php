@@ -23,12 +23,10 @@ class OrderCreateForm extends Model
             [['id', 'user_id', 'status_id'], 'integer'],
             [['status_id'], 'default', 'value' => Order::STATUS_NEW],
             [['name', 'description'], 'string', 'max' => 100],
-            [['user_id'], function ($attribute) {
-                $users = (new User())->getUsers();
-                foreach ($users as $user) {
-                    if ($this->$attribute !== $user) {
-                        $this->addError($attribute, 'Пользователь не существует');
-                    }
+            [['user_id'], 'required', 'when' => function ($model, $attribute) {
+                $user = User::findOne(['id' => $model->user_id]);
+                if (!$user) {
+                    $this->addError($attribute, 'Пользователя с таким идентификатором не существует');
                 }
             }],
         ];

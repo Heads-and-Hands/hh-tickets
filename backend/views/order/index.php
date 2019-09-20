@@ -2,7 +2,10 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use \common\models\Order;
+use \common\models\{
+    User,
+    Status
+};
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\OrderSearch */
@@ -17,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= ($role === Order::ROLE_USER)
+        <?= ($role === User::ROLE_USER)
             ? Html::a('Создать заявку', ['create'], ['class' => 'btn btn-success'])
             : false
         ?>
@@ -46,15 +49,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 'visibleButtons' => [
                     'update' => function ($model) {
-                        return ($model->user->role === Order::ROLE_USER)
+                        return ($model->user->role === User::ROLE_USER)
                             ? true : false;
                     },
                     'edit-status' => function ($model) {
-                        if ($model->user->role === Order::ROLE_ADMIN) {
+                        if ($model->user->role === User::ROLE_ADMIN) {
                             return true;
                         }
-                        if ($model->user->role === Order::ROLE_MANAGER) {
-                            if($model->status_id === Order::STATUS_NEW || $model->status_id === Order::STATUS_IN_WORK) {
+                        if ($model->user->role === User::ROLE_MANAGER) {
+                            if($model->status_id === Status::STATUS_NEW || $model->status_id === Status::STATUS_IN_WORK) {
                                 return true;
                             }
                             else {
@@ -65,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         }
                     },
                     'delete' => function ($model) {
-                        return $model->user->role === Order::ROLE_ADMIN
+                        return $model->user->role === User::ROLE_ADMIN
                                 ? true : false;
                     }
                 ]

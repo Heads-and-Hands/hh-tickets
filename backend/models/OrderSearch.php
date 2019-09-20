@@ -4,7 +4,10 @@ namespace backend\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Order;
+use common\models\{
+    Order,
+    User
+};
 
 /**
  * OrderSearch represents the model behind the search form of `common\models\Order`.
@@ -51,7 +54,7 @@ class OrderSearch extends Order
             'query' => $query,
         ]);
 
-        if ((new Order())->getRole() === Order::ROLE_USER)
+        if ((new Order())->getRole() === User::ROLE_USER)
         {
             $query->andWhere(['user_id' => \Yii::$app->user->identity->getId()]);
         }

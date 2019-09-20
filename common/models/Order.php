@@ -19,15 +19,6 @@ use yii\db\Expression;
  */
 class Order extends \yii\db\ActiveRecord
 {
-    const STATUS_NEW = 1;
-    const STATUS_IN_WORK = 2;
-    const STATUS_REJECTED = 3;
-    const STATUS_DONE = 4;
-
-    const ROLE_ADMIN = 1;
-    const ROLE_MANAGER = 2;
-    const ROLE_USER = 3;
-
     /**
      * {@inheritdoc}
      */
@@ -53,10 +44,9 @@ class Order extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['status_id'], 'default', 'value' => self::STATUS_NEW],
-//            [['user_id'], 'default', 'value' => Yii::$app->user->identity->getId()],
+            [['status_id'], 'default', 'value' => Status::STATUS_NEW],
+            [['user_id'], 'default', 'value' => \Yii::$app->user->id],
             [['user_id', 'status_id'], 'integer'],
-            [['user_id', 'name', 'description', 'status_id'], 'required'],
             [['created_at'], 'safe'],
             [['name', 'description'], 'string', 'max' => 100],
             [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => Status::class, 'targetAttribute' => ['status_id' => 'id']],

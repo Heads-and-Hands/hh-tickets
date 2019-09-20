@@ -2,8 +2,6 @@
 
 namespace common\models;
 
-use Yii;
-
 /**
  * This is the model class for table "status".
  *
@@ -14,6 +12,11 @@ use Yii;
  */
 class Status extends \yii\db\ActiveRecord
 {
+    const STATUS_NEW = 1;
+    const STATUS_IN_WORK = 2;
+    const STATUS_REJECTED = 3;
+    const STATUS_DONE = 4;
+
     /**
      * {@inheritdoc}
      */

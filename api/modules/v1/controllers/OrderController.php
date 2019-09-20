@@ -23,14 +23,15 @@ class OrderController extends Controller
     {
         $form = new OrderCreateForm();
         $form->load(\Yii::$app->request->post(), '');
-        $order = Order::createNewOrder($form);
-        $order->save();
-
-//        if (!$order->save()) {
-//            \Yii::$app->getResponse()->setStatusCode(400);
-//            return '';
-//        }
-
-        return $order;
+        if ($form->validate()) {
+            $order = Order::createNewOrder($form);
+            $order->save();
+            if (!$order->save()) {
+                return \Yii::$app->getResponse()->setStatusCode(400);
+            }
+            return $order;
+        } else {
+           return $form->errors;
+        }
     }
 }

@@ -127,4 +127,10 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         $this->auth_key = Yii::$app->security->generateRandomString();
     }
+
+    public function getUsers() {
+        return User::find()
+            ->select('id')
+            ->column();
+    }
 }

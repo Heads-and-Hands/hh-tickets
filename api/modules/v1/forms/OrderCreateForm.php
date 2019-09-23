@@ -5,7 +5,8 @@ namespace api\modules\v1\forms;
 use yii\base\Model;
 use common\models\{
     Order,
-    User
+    User,
+    Status
 };
 
 class OrderCreateForm extends Model
@@ -21,7 +22,7 @@ class OrderCreateForm extends Model
     {
         return [
             [['id', 'user_id', 'status_id'], 'integer'],
-            [['status_id'], 'default', 'value' => Order::STATUS_NEW],
+            [['status_id'], 'default', 'value' => Status::STATUS_NEW],
             [['name', 'description'], 'string', 'max' => 100],
             [['user_id'], 'required', 'when' => function ($model, $attribute) {
                 $user = User::findOne(['id' => $model->user_id]);

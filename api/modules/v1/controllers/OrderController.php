@@ -7,8 +7,8 @@ use api\modules\v1\forms\{
     OrderStatusChangeForm
 };
 use api\modules\v1\models\Order;
-use yii\data\ActiveDataProvider;
 use yii\rest\Controller;
+use api\modules\v1\components\Pagination;
 
 class OrderController extends Controller
 {
@@ -16,10 +16,24 @@ class OrderController extends Controller
 
     public function actionIndex()
     {
-        return new ActiveDataProvider([
-            'query' => Order::find(),
-            'sort'  => ['defaultOrder' => ['created_at' => SORT_DESC]],
+        $query = Order::find();
+        $limit = \Yii::$app->request->get('limit');
+        $offset = \Yii::$app->request->get('offset');
+
+
+        $pagination = new Pagination([
+            'totalCount' => $query->count(),
         ]);
+
+        $order['data'] = $query
+            ->offset($offset)
+            ->limit($limit)
+            ->all();
+
+        $order['recordsTotal'] = $pagination->totalCount;
+        $order['recordsFiltered'] = $pagination->totalCount;
+
+        return $order;
     }
 
     public function actionCreate()

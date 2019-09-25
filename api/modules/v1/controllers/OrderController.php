@@ -20,18 +20,22 @@ class OrderController extends Controller
     {
         $token = \Yii::$app->request->headers->get('token');
 
-        if (!$token)
+        $auth = Auth::find()
+            ->andWhere(['token' => $token])
+            ->one();
+
+        if (!$auth)
         {
             return false;
         }
 
-        return $token;
+        return true;
     }
 
     public function actionIndex()
     {
         if (!$this->getToken()) {
-            return 'Токен не введен';
+            return 'Токен не введен или введен не верно';
         }
 
         $query = Order::find();
@@ -56,7 +60,7 @@ class OrderController extends Controller
     public function actionCreate()
     {
         if (!$this->getToken()) {
-            return 'Токен не введен';
+            return 'Токен не введен или введен не верно';
         }
 
         $form = new OrderCreateForm();
@@ -72,7 +76,7 @@ class OrderController extends Controller
     public function actionUpdate()
     {
         if (!$this->getToken()) {
-            return 'Токен не введен';
+            return 'Токен не введен или введен не вернон';
         }
 
         $form = new OrderStatusChangeForm();

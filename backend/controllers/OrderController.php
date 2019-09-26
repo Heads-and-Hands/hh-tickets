@@ -8,7 +8,6 @@ use common\models\User;
 use backend\models\OrderSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;
-use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 

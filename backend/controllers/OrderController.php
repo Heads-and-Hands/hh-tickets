@@ -2,12 +2,13 @@
 
 namespace backend\controllers;
 
-use Yii;
+use common\models\Status;
 use common\models\Order;
 use common\models\User;
 use backend\models\OrderSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -30,54 +31,16 @@ class OrderController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => [
+                            'logout',
+                            'index',
+                            'create',
+                            'edit-status',
+                            'update',
+                            'delete',
+                        ],
                         'allow' => true,
                         'roles' => ['@'],
-                    ],
-                    [
-                        'actions' => ['create'],
-                        'allow' => true,
-                        'matchCallback' => function () {
-                            if ($this->getRole() === Order::ROLE_USER){
-                                return true;
-                            } else {
-                                return $this->redirect('index');
-                            }
-                        }
-                    ],
-                    [
-                        'actions' => ['edit-status'],
-                        'allow' => true,
-                        'matchCallback' => function () {
-                            if ($this->getRole() === Order::ROLE_ADMIN
-                                || $this->getRole() === Order::ROLE_MANAGER){
-                                return true;
-                            } else {
-                                return $this->redirect('index');
-                            }
-                        }
-                    ],
-                    [
-                        'actions' => ['update'],
-                        'allow' => true,
-                        'matchCallback' => function () {
-                            if ($this->getRole() === Order::ROLE_USER){
-                                return true;
-                            } else {
-                                return $this->redirect('index');
-                            }
-                        }
-                    ],
-                    [
-                        'actions' => ['delete'],
-                        'allow' => true,
-                        'matchCallback' => function () {
-                            if ($this->getRole() === Order::ROLE_ADMIN){
-                                return true;
-                            } else {
-                                return $this->redirect('index');
-                            }
-                        }
                     ],
                 ],
             ],
@@ -90,6 +53,38 @@ class OrderController extends Controller
         ];
     }
 
+    public function checkAccess ($action, $model = null)
+    {
+        switch ($this->action->id)
+        {
+            case 'create':
+                if ((new User)->getRole() === User::ROLE_USER){
+                    return true;
+                }
+                break;
+            case 'edit-status':
+                if ((new User)->getRole() === User::ROLE_ADMIN
+                    || (new User)->getRole() === User::ROLE_MANAGER){
+                    return true;
+                }
+                break;
+            case 'update':
+                if ((new User)->getRole() === User::ROLE_USER){
+                    return true;
+                }
+                break;
+            case 'delete':
+                if ((new User)->getRole() === User::ROLE_ADMIN){
+                    return true;
+                }
+                break;
+        }
+        if (!\Yii::$app->user->can($action, ['model' => $model]))
+        {
+            return $this->redirect('index');
+        }
+    }
+
     /**
      * Lists all Order models.
      * @return mixed
@@ -97,12 +92,12 @@ class OrderController extends Controller
     public function actionIndex()
     {
         $searchModel = new OrderSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'role' => (new Order())->getRole(),
+            'role' => (new User())->getRole(),
         ]);
     }
 
@@ -113,9 +108,11 @@ class OrderController extends Controller
      */
     public function actionCreate()
     {
+        $this->checkAccess($this->action->id);
+
         $model = new Order();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(\Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         }
 
@@ -126,20 +123,22 @@ class OrderController extends Controller
 
     public function actionEditStatus($id)
     {
+        $this->checkAccess($this->action->id);
+
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(\Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         }
 
         $statusesManager = null;
 
-        if ($model->status_id == 1) {
+        if ($model->status_id == Status::STATUS_NEW) {
             $statusesManager = [
                 '2' => 'В работе',
                 '3' => 'Отклонена',
             ];
-        } elseif ($model->status_id == 2) {
+        } elseif ($model->status_id == Status::STATUS_IN_WORK) {
             $statusesManager = [
                 '4' => 'Сделана',
             ];
@@ -169,9 +168,11 @@ class OrderController extends Controller
      */
     public function actionUpdate($id)
     {
+        $this->checkAccess($this->action->id);
+
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(\Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         }
 
@@ -190,6 +191,8 @@ class OrderController extends Controller
      */
     public function actionDelete($id)
     {
+        $this->checkAccess($this->action->id);
+
         $this->findModel($id)->delete();
         return $this->redirect(['index']);
     }

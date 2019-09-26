@@ -85,11 +85,4 @@ class Order extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
-
-    public function getRole() {
-        return $role = User::find()
-            ->select('role')
-            ->where(['id' => \Yii::$app->user->id])
-            ->scalar();
-    }
 }

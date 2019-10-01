@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use \common\models\Order;
+use \common\models\User;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Order */
@@ -21,9 +21,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?= ($model->isNewRecord) ? $form->field($model, 'description')->textarea(['rows' => '6'], ['maxlength' => true]) : '' ?>
 
-        <?= (!$model->isNewRecord && $model->user->role == Order::ROLE_ADMIN) ? $form->field($model, 'status_id')->dropDownList($statusesAdmin) : '' ?>
+        <?= (!$model->isNewRecord && $model->user->role == User::ROLE_ADMIN) ? $form->field($model, 'status_id')->dropDownList($statusesAdmin) : '' ?>
 
-        <?= (!$model->isNewRecord && $model->user->role == Order::ROLE_MANAGER) ? $form->field($model, 'status_id')->dropDownList($statusesManager) : '' ?>
+        <?= (!$model->isNewRecord && $model->user->role == User::ROLE_MANAGER) ? $form->field($model, 'status_id')->dropDownList($statusesManager) : '' ?>
 
         <div class="form-group">
             <?= Html::submitButton('Изменить', ['class' => 'btn btn-success']) ?>

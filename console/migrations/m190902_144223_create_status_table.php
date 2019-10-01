@@ -16,12 +16,12 @@ class m190902_144223_create_status_table extends Migration
             'id' => $this->primaryKey(),
             'name' =>$this->string(100)->notNull(),
         ]);
-        Yii::$app->db->createCommand()->batchInsert('status', ['name'], [
+        $this->batchInsert('status', ['name'], [
             ['Новая'],
             ['В работе'],
             ['Отклонена'],
             ['Сделана'],
-        ])->execute();
+        ]);
     }
 
     /**

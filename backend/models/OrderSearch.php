@@ -54,7 +54,7 @@ class OrderSearch extends Order
             'query' => $query,
         ]);
 
-        if ((new Order())->getRole() === User::ROLE_USER)
+        if ((new User())->getRole() === User::ROLE_USER)
         {
             $query->andWhere(['user_id' => \Yii::$app->user->identity->getId()]);
         }

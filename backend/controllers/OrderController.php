@@ -57,23 +57,23 @@ class OrderController extends Controller
         switch ($this->action->id)
         {
             case 'create':
-                if ((new User)->getRole() === User::ROLE_USER){
+                if (User::getRole() === User::ROLE_USER){
                     return true;
                 }
                 break;
             case 'edit-status':
-                if ((new User)->getRole() === User::ROLE_ADMIN
-                    || (new User)->getRole() === User::ROLE_MANAGER){
+                if (User::getRole() === User::ROLE_ADMIN
+                    || User::getRole() === User::ROLE_MANAGER){
                     return true;
                 }
                 break;
             case 'update':
-                if ((new User)->getRole() === User::ROLE_USER){
+                if (User::getRole() === User::ROLE_USER){
                     return true;
                 }
                 break;
             case 'delete':
-                if ((new User)->getRole() === User::ROLE_ADMIN){
+                if (User::getRole() === User::ROLE_ADMIN){
                     return true;
                 }
                 break;
@@ -96,7 +96,7 @@ class OrderController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'role' => (new User())->getRole(),
+            'role' => User::getRole(),
         ]);
     }
 

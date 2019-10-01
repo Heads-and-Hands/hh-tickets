@@ -138,10 +138,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             ->column();
     }
 
-    public function getRole() {
-        return $role = User::find()
-            ->select('role')
-            ->where(['id' => \Yii::$app->user->id])
-            ->scalar();
+    public static function getRole() {
+        return Yii::$app->user->role;
     }
 }
